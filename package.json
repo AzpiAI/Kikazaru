@@ -1,0 +1,23 @@
+{
+  "name": "yuzu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start":"electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaecius/Yuzu.git"
+  },
+  "author": "Erlantz Calvo and Daniel Cañadillas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaecius/Yuzu/issues"
+  },
+  "homepage": "https://github.com/kaecius/Yuzu#readme",
+  "devDependencies": {
+    "electron": "^16.0.4"
+  }
+}

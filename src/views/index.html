@@ -20,9 +20,12 @@
 			<header>
 				<h1>yuzu</h1>
 				<p>
-					<a id="link" href="http://localhost:9900">Open tab</a> <br /> <br />
+					<a id="link" href="http://localhost:9900">Open tab</a> <br />
+					<br />
 					<b>Model status:</b> <span id="modelStatus">unloaded</span> <br />
-					<a id="load" href="#"> Load model </a> <br />
+					<a id="load" href="#"> Load model </a> &nbsp;&nbsp;
+					<select id="lang"></select>
+					<br />
 					<a id="start" href="#"> Start recording </a> <br />
 					<a id="stop" href="#"> Stop recording </a> <br />
 					<a id="unload" href="#"> UnLoad model </a> <br />
@@ -32,6 +35,11 @@
 			<footer></footer>
 		</div>
 		<script>
+			for (let lang in window.models) {
+				document.getElementById(
+					"lang"
+				).innerHTML += `<option value="${lang}">${window.models[lang].name}</option>`;
+			}
 			// TODO remove when stop testing
 			voice.onPartialResult(function (result) {
 				document.getElementById("section").innerHTML = result;
@@ -56,8 +64,12 @@
 				.getElementById("load")
 				.addEventListener("click", function (event) {
 					event.preventDefault();
-					// TODO remove hardcoded path
-					voice.loadModel("es","https://alphacephei.com/vosk/models/vosk-model-small-es-0.3.zip");
+					document.getElementById("lang").disabled = true;
+
+					voice.loadModel(
+						document.getElementById("lang").value,
+						window.models[document.getElementById("lang").value].url
+					);
 				});
 			document
 				.getElementById("start")
@@ -76,6 +88,7 @@
 				.addEventListener("click", function (event) {
 					event.preventDefault();
 					voice.unloadModel();
+					document.getElementById("lang").disabled = false;
 				});
 		</script>
 	</body>

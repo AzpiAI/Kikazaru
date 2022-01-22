@@ -5,4 +5,4 @@ contextBridge.exposeInMainWorld("electron", {
 	shell: { ...shell, openExternal: shell.openExternal },
 });
 
-
+contextBridge.exposeInMainWorld("models", require("./models.json"));

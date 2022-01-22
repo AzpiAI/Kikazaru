@@ -1,12 +1,16 @@
 const path = require("node:path");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const is = require("electron-util");
-const  unhandled  = require("electron-unhandled");
+const unhandled = require("electron-unhandled");
 const debug = require("electron-debug");
+const config = require("./config.js");
+const server = require("./server.js");
+
 // const {contextMenu} = require( 'electron-context-menu');
 // const packageJson = require("../package.json");
-const config = require("./config.js");
 // const {autoUpdater} = require( 'electron-updater');
+
+app.commandLine.appendSwitch("js-flags", "--expose_gc");
 
 unhandled(); // Manage unhandled rejections (https://github.com/sindresorhus/electron-unhandled#readme)
 debug(); // Debug features
@@ -32,8 +36,16 @@ const createMainWindow = async () => {
 		title: app.name,
 		icon: path.join(__dirname, "static", "icon.ico"),
 		show: false,
-		width: 600,
-		height: 400,
+		width: 1920,
+		height: 1080,
+		webPreferences: {
+			preload: path.join(__dirname, "preload.js"),
+			contextIsolation: true,
+		},
+	});
+
+	win.webContents.once("dom-ready", () => {
+		server.start();
 	});
 
 	win.on("ready-to-show", () => {
@@ -54,6 +66,10 @@ const createMainWindow = async () => {
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
 }
+
+app.on("before-quit", () => {
+	server.stop();
+});
 
 app.on("second-instance", () => {
 	if (mainWindow) {
@@ -77,10 +93,17 @@ app.on("activate", () => {
 	}
 });
 
+ipcMain.on("partialResult", (event, result) => {
+	server.sendPartialResult(result);
+});
+
+ipcMain.on("result", (event, result) => {
+	server.sendResult(result);
+});
+
 (async () => {
 	await app.whenReady();
 	mainWindow = await createMainWindow();
-
 	const favoriteAnimal = config.get("favoriteAnimal"); // Example of how to get a value = require( the config file
 	console.log(favoriteAnimal); // Example of how to log a value = require( the config file
 })();

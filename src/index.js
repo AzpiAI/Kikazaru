@@ -1,5 +1,5 @@
 const path = require("node:path");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const is = require("electron-util");
 const  unhandled  = require("electron-unhandled");
 const debug = require("electron-debug");
@@ -32,12 +32,31 @@ const createMainWindow = async () => {
 		title: app.name,
 		icon: path.join(__dirname, "static", "icon.ico"),
 		show: false,
-		width: 600,
-		height: 400,
+		width: 800,
+		height: 800,
+		webPreferences: { //seguridad
+			nodeIntegration: false,
+			contextIsolation: true,
+			enableRemoteModule: false, // turn off remote
+			preload: path.join(__dirname, "utils/preload.js")
+		}
 	});
 
 	win.on("ready-to-show", () => {
+		// inputDevice.getLastConfiguredInputDevice();
+		let device = config.get('inputDevice');
+		win.webContents.send("savedInputDevice", device);
+
 		win.show();
+		
+		ipcMain.on("getInputDevice", () => {
+			mainWindow.webContents.send("savedInputDevice", config.get("inputDevice"));
+		})
+
+		ipcMain.on("saveSelectedInputDevice", (evt,data)=>{
+			config.set("inputDevice", data);
+			// console.log("popoop")
+		})
 	});
 
 	win.on("closed", () => {
@@ -84,3 +103,4 @@ app.on("activate", () => {
 	const favoriteAnimal = config.get("favoriteAnimal"); // Example of how to get a value = require( the config file
 	console.log(favoriteAnimal); // Example of how to log a value = require( the config file
 })();
+

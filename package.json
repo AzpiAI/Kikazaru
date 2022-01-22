@@ -28,7 +28,11 @@
     "electron-store": "^8.0.1",
     "electron-unhandled": "^3.0.2",
     "electron-updater": "^4.6.1",
-    "electron-util": "^0.17.2"
+    "electron-util": "^0.17.2",
+    "events": "^3.3.0",
+    "node-static": "^0.7.11",
+    "vosk-browser": "^0.0.5",
+    "ws": "^8.4.2"
   },
   "devDependencies": {
     "electron": "^16.0.5",

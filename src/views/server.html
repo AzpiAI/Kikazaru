@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>yuzu</title>
+		<link rel="stylesheet" href="../stylesheets/index.css" />
+		<script
+			type="application/javascript"
+			src="https://cdn.jsdelivr.net/npm/vosk-browser@0.0.5/dist/vosk.js"
+		></script>
+		<script type="application/javascript">
+			function errorCallback(e) {
+				console.log("Error", e);
+			}
+
+			let webSocket = new WebSocket("ws://localhost:9900");
+			webSocket.onopen = function (openEvent) {
+				console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
+			};
+			webSocket.onclose = function (closeEvent) {
+				console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
+			};
+			webSocket.onerror = function (errorEvent) {
+				console.log("WebSocket ERROR: " + JSON.stringify(errorEvent, null, 4));
+			};
+			webSocket.onmessage = function (messageEvent) {
+				let resultsContainer = document.getElementById("recognition-result");
+				let partialContainer = document.getElementById("partial");
+
+				let wsMsg = JSON.parse(messageEvent.data);
+				let action = wsMsg.type;
+				let result = wsMsg.data;
+
+				switch (action) {
+					case "result":
+						const newSpan = document.createElement("span");
+						newSpan.textContent = `${result.text} `;
+						resultsContainer.insertBefore(newSpan, partialContainer);
+						break;
+					case "partial":
+						partialContainer.textContent = result.partial;
+						break;
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<h1>yuzu</h1>
+				<p></p>
+			</header>
+			<section class="main">
+				<div id="recognition-result">Parcial : <span id="partial"></span></div>
+			</section>
+			<footer></footer>
+		</div>
+	</body>
+</html>

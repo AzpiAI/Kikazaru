@@ -1,19 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>yuzu</title>
-		<link rel="stylesheet" href="../stylesheets/index.css">
+		<link rel="stylesheet" href="../stylesheets/index.css" />
+		<script src="../../node_modules/vosk-browser/dist/vosk.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"
+			integrity="sha512-AbgDRHOu/IQcXzZZ6WrOliwI8umwOgLE7sZgRAsNzmcOWlQA8RhXQzBx99Ho0jlGPWIPoT9pwk4kmeeR4qsV/g=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script src="voice/voice.js"></script>
+		<script></script>
 	</head>
 	<body>
 		<div class="container">
 			<header>
 				<h1>yuzu</h1>
-				<p></p>
+				<p>
+					<a id="link" href="http://localhost:9900">Open tab</a> <br />
+					<br />
+					<b>Model status:</b> <span id="modelStatus">unloaded</span> <br />
+					<a id="load" href="#"> Load model </a> &nbsp;&nbsp;
+					<select id="lang"></select>
+					<br />
+					<a id="start" href="#"> Start recording </a> <br />
+					<a id="stop" href="#"> Stop recording </a> <br />
+					<a id="unload" href="#"> UnLoad model </a> <br />
+				</p>
 			</header>
-			<section class="main"></section>
+			<section id="section" class="main"></section>
 			<footer></footer>
 		</div>
+		<script>
+			for (let lang in window.models) {
+				document.getElementById(
+					"lang"
+				).innerHTML += `<option value="${lang}">${window.models[lang].name}</option>`;
+			}
+			// TODO remove when stop testing
+			voice.onPartialResult(function (result) {
+				document.getElementById("section").innerHTML = result;
+				window.electron.ipcRenderer.send("partialResult", result);
+			});
+
+			voice.onResult(function (result) {
+				document.getElementById("section").innerHTML = result;
+				window.electron.ipcRenderer.send("result", result);
+			});
+			voice.onModelStatusChange(function (status) {
+				document.getElementById("modelStatus").innerHTML = status.current;
+			});
+
+			document
+				.getElementById("link")
+				.addEventListener("click", function (event) {
+					event.preventDefault();
+					window.electron.shell.openExternal(this.href);
+				});
+			document
+				.getElementById("load")
+				.addEventListener("click", function (event) {
+					event.preventDefault();
+					document.getElementById("lang").disabled = true;
+
+					voice.loadModel(
+						document.getElementById("lang").value,
+						window.models[document.getElementById("lang").value].url
+					);
+				});
+			document
+				.getElementById("start")
+				.addEventListener("click", function (event) {
+					event.preventDefault();
+					voice.start();
+				});
+			document
+				.getElementById("stop")
+				.addEventListener("click", function (event) {
+					event.preventDefault();
+					voice.stop();
+				});
+			document
+				.getElementById("unload")
+				.addEventListener("click", function (event) {
+					event.preventDefault();
+					voice.unloadModel();
+					document.getElementById("lang").disabled = false;
+				});
+		</script>
 	</body>
 </html>

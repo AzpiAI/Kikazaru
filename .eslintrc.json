@@ -8,6 +8,7 @@
     "parserOptions": {
         "ecmaVersion": 13
     },
+	"ignorePatterns": ["**/views/**/*.js"],
     "rules": {
     }
 }

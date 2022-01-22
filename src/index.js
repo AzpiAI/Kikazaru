@@ -48,6 +48,14 @@ const createMainWindow = async () => {
 	});
 
 	win.webContents.once("dom-ready", () => {
+		ipcMain.on("getInputDevice", () => {
+			console.log("getInputDevice");
+			win.webContents.send("savedInputDevice", config.get("inputDevice"));
+		});
+
+		ipcMain.on("saveSelectedInputDevice", (evt, data) => {
+			config.set("inputDevice", data);
+		});
 		server.start();
 	});
 
@@ -107,6 +115,4 @@ ipcMain.on("result", (event, result) => {
 (async () => {
 	await app.whenReady();
 	mainWindow = await createMainWindow();
-	const favoriteAnimal = config.get("favoriteAnimal"); // Example of how to get a value = require( the config file
-	console.log(favoriteAnimal); // Example of how to log a value = require( the config file
 })();

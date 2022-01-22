@@ -12,14 +12,10 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
+		<script src="./js/renderUtils.js"></script>
 		<script src="voice/voice.js"></script>
-		<script>
-			window.onload = function () {
-				window.i18n.changeLanguage(navigator.language);
-			};
-		</script>
 	</head>
-	<body>
+	<body onload="loadConfiguration()">
 		<div class="container">
 			<header>
 				<h1>yuzu</h1>
@@ -38,7 +34,12 @@
 					<br />
 				</p>
 			</header>
-			<section id="section" class="main"></section>
+			<section id="section" class="main">
+				<select id="inputDevicesList" disabled onchange="saveInputDeviceConfig(this)">
+					<option value="loading" data-i18n="input.devices.loading"></option>
+				</select>
+
+			</section>
 			<footer></footer>
 		</div>
 		<script>

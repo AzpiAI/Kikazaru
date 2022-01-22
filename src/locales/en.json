@@ -1,0 +1,12 @@
+{
+	"lang": {
+		"en": "English",
+		"es": "Spanish"
+	},
+	"model.status": "Model status",
+	"load.model": "Load model",
+	"unload.model": "Unload model",
+	"start.recording": "Start recording",
+	"stop.recording": "Stop recording",
+	"open.tab": "Open tab"
+}

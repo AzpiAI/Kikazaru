@@ -5,6 +5,9 @@ const unhandled = require("electron-unhandled");
 const debug = require("electron-debug");
 const config = require("./config.js");
 const server = require("./server.js");
+const process = require("process");
+
+process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 
 // const {contextMenu} = require( 'electron-context-menu');
 // const packageJson = require("../package.json");

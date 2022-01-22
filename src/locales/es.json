@@ -1,0 +1,12 @@
+{
+	"lang": {
+		"en": "Inglés",
+		"es": "Español"
+	},
+	"model.status": "Estado del modelo",
+	"load.model": "Activar modelo",
+	"unload.model": "Desactivar modelo",
+	"start.recording": "Empezar",
+	"stop.recording": "Terminar",
+	"open.tab": "Abrir pestaña"
+}

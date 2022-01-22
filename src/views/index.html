@@ -13,22 +13,29 @@
 			referrerpolicy="no-referrer"
 		></script>
 		<script src="voice/voice.js"></script>
-		<script></script>
+		<script>
+			window.onload = function () {
+				window.i18n.changeLanguage(navigator.language);
+			};
+		</script>
 	</head>
 	<body>
 		<div class="container">
 			<header>
 				<h1>yuzu</h1>
 				<p>
-					<a id="link" href="http://localhost:9900">Open tab</a> <br />
+					<a id="link" href="http://localhost:9900" data-i18n="open.tab"></a>
 					<br />
-					<b>Model status:</b> <span id="modelStatus">unloaded</span> <br />
-					<a id="load" href="#"> Load model </a> &nbsp;&nbsp;
+					<br />
+					<b data-i18n="model.status"></b>:
+					<span id="modelStatus">unloaded</span> <br />
+					<a id="load" href="#" data-i18n="load.model"></a> &nbsp;&nbsp;
 					<select id="lang"></select>
 					<br />
-					<a id="start" href="#"> Start recording </a> <br />
-					<a id="stop" href="#"> Stop recording </a> <br />
-					<a id="unload" href="#"> UnLoad model </a> <br />
+					<a id="start" href="#" data-i18n="start.recording"></a> <br />
+					<a id="stop" href="#" data-i18n="stop.recording"></a> <br />
+					<a id="unload" href="#" data-i18n="unload.model"></a>
+					<br />
 				</p>
 			</header>
 			<section id="section" class="main"></section>
@@ -38,7 +45,7 @@
 			for (let lang in window.models) {
 				document.getElementById(
 					"lang"
-				).innerHTML += `<option value="${lang}">${window.models[lang].name}</option>`;
+				).innerHTML += `<option value="${lang}" data-i18n="${window.models[lang].name}"></option>`;
 			}
 			// TODO remove when stop testing
 			voice.onPartialResult(function (result) {

@@ -76,6 +76,7 @@ const voice = (function () {
 		changeStatus("unloading");
 
 		recognizer.remove();
+		model.terminate();
 		delete modelLang;
 		delete modelUrl;
 		delete channel;

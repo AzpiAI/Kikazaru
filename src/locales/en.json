@@ -8,5 +8,6 @@
 	"unload.model": "Unload model",
 	"start.recording": "Start recording",
 	"stop.recording": "Stop recording",
-	"open.tab": "Open tab"
+	"open.tab": "Open tab",
+	"input.devices.loading": "Loading..."
 }

@@ -8,5 +8,6 @@
 	"unload.model": "Desactivar modelo",
 	"start.recording": "Empezar",
 	"stop.recording": "Terminar",
-	"open.tab": "Abrir pestaña"
+	"open.tab": "Abrir pestaña",
+	"input.devices.loading": "Cargando..."
 }

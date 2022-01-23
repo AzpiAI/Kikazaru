@@ -96,7 +96,7 @@ const voice = (function () {
 
 		try {
 			let channel = new MessageChannel();
-
+			let deviceId = getSelectedInputDevice();
 			model.registerPort(channel.port1);
 			let mediaStream = await navigator.mediaDevices.getUserMedia({
 				video: false,
@@ -105,6 +105,7 @@ const voice = (function () {
 					noiseSuppression: true,
 					channelCount: 1,
 					sampleRate,
+					deviceId: deviceId
 				},
 			});
 

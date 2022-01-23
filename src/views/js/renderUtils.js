@@ -1,5 +1,8 @@
 async function loadConfiguration() {
 	window.i18n.changeLanguage(navigator.language);
+	navigator.mediaDevices.ondevicechange = (evt) => {
+		loadInputDevicesList();
+	}
 	loadInputDevicesList();
 }
 
@@ -16,6 +19,10 @@ async function loadInputDevicesList() {
 	console.log(data[0]);
 	console.log(data[1]);
 	console.log(devicesList);
+
+	// remove loading... option and setting the list able
+	devicesList.innerHTML = '';
+	devicesList.removeAttribute("disabled");
 
 	data[1]
 		.filter((device) => device.kind === "audioinput")
@@ -56,4 +63,9 @@ function createInputDevice(id, name, selected = false) {
 function saveInputDeviceConfig(select) {
 	let id = select[select.selectedIndex].id;
 	window.api.send("saveSelectedInputDevice", id);
+}
+
+function getSelectedInputDevice(){
+	let select = document.getElementById("inputDevicesList");
+	return select[select.selectedIndex].id;
 }

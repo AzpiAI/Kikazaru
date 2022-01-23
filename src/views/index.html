@@ -81,12 +81,14 @@
 				.getElementById("start")
 				.addEventListener("click", function (event) {
 					event.preventDefault();
+					document.getElementById("inputDevicesList").disabled = true;
 					voice.start();
 				});
 			document
 				.getElementById("stop")
 				.addEventListener("click", function (event) {
 					event.preventDefault();
+					document.getElementById("inputDevicesList").disabled = false;
 					voice.stop();
 				});
 			document

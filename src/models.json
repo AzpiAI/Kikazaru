@@ -6,5 +6,25 @@
 	"en": {
 		"name": "lang.en",
 		"url": "https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip"
+	},
+	"de": {
+		"name": "lang.de",
+		"url": "https://alphacephei.com/vosk/models/vosk-model-small-de-0.15.zip"
+	},
+	"cn": {
+		"name": "lang.cn",
+		"url": "https://alphacephei.com/vosk/models/vosk-model-small-cn-0.3.zip"
+	},
+	"jp": {
+		"name": "lang.jp",
+		"url": "https://alphacephei.com/vosk/models/vosk-model-small-ja-0.22.zip"
+	},
+	"pt": {
+		"name": "lang.pt",
+		"url": "https://alphacephei.com/vosk/models/vosk-model-small-pt-0.3.zip"
+	},
+	"it": {
+		"name": "lang.it",
+		"url": "https://alphacephei.com/vosk/models/vosk-model-small-it-0.4.zip"
 	}
 }

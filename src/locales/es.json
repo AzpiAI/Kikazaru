@@ -1,7 +1,12 @@
 {
 	"lang": {
 		"en": "Inglés",
-		"es": "Español"
+		"es": "Español",
+		"de": "Alemán",
+		"cn": "Chino",
+		"jp": "Japonés",
+		"pt": "Portugués",
+		"it": "Italiano"
 	},
 	"model.status": "Estado del modelo",
 	"load.model": "Activar modelo",

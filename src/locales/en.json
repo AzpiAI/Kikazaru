@@ -1,7 +1,12 @@
 {
 	"lang": {
 		"en": "English",
-		"es": "Spanish"
+		"es": "Spanish",
+		"de": "Deutsch",
+		"cn": "Chinese",
+		"jp": "Japanese",
+		"pt": "Portuguese",
+		"it": "Italian"
 	},
 	"model.status": "Model status",
 	"load.model": "Load model",

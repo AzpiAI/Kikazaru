@@ -64,3 +64,8 @@ function saveInputDeviceConfig(select) {
 	let id = select[select.selectedIndex].id;
 	window.api.send("saveSelectedInputDevice", id);
 }
+
+function getSelectedInputDevice(){
+	let select = document.getElementById("inputDevicesList");
+	return select[select.selectedIndex].id;
+}

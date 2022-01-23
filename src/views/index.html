@@ -50,12 +50,10 @@
 			}
 			// TODO remove when stop testing
 			voice.onPartialResult(function (result) {
-				document.getElementById("section").innerHTML = result;
 				window.electron.ipcRenderer.send("partialResult", result);
 			});
 
 			voice.onResult(function (result) {
-				document.getElementById("section").innerHTML = result;
 				window.electron.ipcRenderer.send("result", result);
 			});
 			voice.onModelStatusChange(function (status) {

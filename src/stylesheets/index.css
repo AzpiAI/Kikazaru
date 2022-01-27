@@ -24,8 +24,7 @@ body {
 }
 
 header {
-	width: 500px;
-	height: 250px;
+	height: 160px;
 	top: 50%;
 	left: 50%;
 	/* margin-top: -125px;
@@ -40,3 +39,84 @@ header h1 {
 	padding: 0;
 	opacity: 0.7;
 }
+
+.container {
+	text-align: center;
+}
+
+#inputDevicesList {
+	width: 60%;
+}
+
+.btn {
+	margin: 5px;
+}
+.notification-bottom {
+	position: fixed;
+	width: 20px;
+	bottom: -13px;
+	left: 5px;
+	/* Rest of your styling */
+  }
+
+  .status {
+	  margin-right: 5px;
+  }
+  
+  /* .notification-close {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+  } */
+  /* .spinner-border {
+	  display: none !important;
+  } */
+
+  .status-running {
+	  color: #08a01c;
+  }
+
+  .status-ready {
+	  color: #fdb61c;
+  }
+
+  .status-unselected {
+	  color: #BABAB8;
+  }
+
+  .status-loading {
+	color: #182da5;
+}
+.wrapper {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	z-index: 10;
+  }
+  .close:before {
+	content: '✕';
+  }
+  .close:hover {
+	color: #b83030;
+  }
+  .close {
+	  font-size: 30px;
+	position: absolute;
+	top: 0;
+	right: 1%;
+	cursor: pointer;
+  }
+
+  .minimize:before {
+	content: '🗕';
+  }
+  .minimize:hover {
+	color: #626fe6;
+  }
+  .minimize {
+	  font-size: 40px;
+	position: absolute;
+	top: -0.5em;
+	right: 3.5%;
+	cursor: pointer;
+  }

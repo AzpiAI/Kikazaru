@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>yuzu</title>
 		<link rel="stylesheet" href="../stylesheets/index.css" />
+		<link href="../stylesheets/btstrp.css" rel="stylesheet" >
 		<script src="../../node_modules/vosk-browser/dist/vosk.js"></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"
@@ -13,91 +14,53 @@
 			referrerpolicy="no-referrer"
 		></script>
 		<script src="./js/renderUtils.js"></script>
+		<script defer src="./js/recognizerUtils.js"></script>
 		<script src="voice/voice.js"></script>
 	</head>
 	<body onload="loadConfiguration()">
 		<div class="container">
 			<header>
-				<h1>yuzu</h1>
-				<p>
-					<a id="link" href="http://localhost:9900" data-i18n="open.tab"></a>
-					<br />
-					<br />
-					<b data-i18n="model.status"></b>:
-					<span id="modelStatus">unloaded</span> <br />
-					<a id="load" href="#" data-i18n="load.model"></a> &nbsp;&nbsp;
-					<select id="lang"></select>
-					<br />
-					<a id="start" href="#" data-i18n="start.recording"></a> <br />
-					<a id="stop" href="#" data-i18n="stop.recording"></a> <br />
-					<a id="unload" href="#" data-i18n="unload.model"></a>
-					<br />
-				</p>
+				<div class="wrapper">
+					<span class="minimize" onclick="window.api.send('minimize','null');"></span>
+					<span class="close" onclick="window.api.send('close','null');"></span>
+				  </div>
+				<h1 onclick="">Azpi</h1>
 			</header>
-			<section id="section" class="main">
+			<section  id="section" class="main">
 				<select id="inputDevicesList" disabled onchange="saveInputDeviceConfig(this)">
 					<option value="loading" data-i18n="input.devices.loading"></option>
 				</select>
-
+				<div class="controls">
+					<a  id="link" href="http://localhost:9900" data-i18n="open.tab"></a>
+					<input type="text" id="txt" readonly="readonly" disabled value="popoppopopo">
+					<br />
+					<br />
+					<b data-i18n="model.status"></b>:
+					<div id="LangChooser">
+						<label data-i18n="sub.language"></label>
+						<select id="languageChooser" onchange="loadLanguage(this)">
+							<option value="" selected disabled hidden data-i18n="choose.language"></option>
+						</select>
+						<div id="loadingCircle" class="spinner-border text-primary" style="display: none;" role="status">
+							<span class="sr-only">Loading...</span>
+						  </div>
+					</div>
+					<br />
+					<button class="btn btn-primary" id="start" onclick="startRecognising()" data-i18n="start.recording" disabled></button> <br />
+					<button class="btn btn-primary" id="stop" href="#" data-i18n="stop.recording" disabled></button> <br />
+					<br />
+				
+				</div>
+				  
 			</section>
 			<footer></footer>
 		</div>
-		<script>
-			for (let lang in window.models) {
-				document.getElementById(
-					"lang"
-				).innerHTML += `<option value="${lang}" data-i18n="${window.models[lang].name}"></option>`;
-			}
-			// TODO remove when stop testing
-			voice.onPartialResult(function (result) {
-				window.electron.ipcRenderer.send("partialResult", result);
-			});
-
-			voice.onResult(function (result) {
-				window.electron.ipcRenderer.send("result", result);
-			});
-			voice.onModelStatusChange(function (status) {
-				document.getElementById("modelStatus").innerHTML = status.current;
-			});
-
-			document
-				.getElementById("link")
-				.addEventListener("click", function (event) {
-					event.preventDefault();
-					window.electron.shell.openExternal(this.href);
-				});
-			document
-				.getElementById("load")
-				.addEventListener("click", function (event) {
-					event.preventDefault();
-					document.getElementById("lang").disabled = true;
-
-					voice.loadModel(
-						document.getElementById("lang").value,
-						window.models[document.getElementById("lang").value].url
-					);
-				});
-			document
-				.getElementById("start")
-				.addEventListener("click", function (event) {
-					event.preventDefault();
-					document.getElementById("inputDevicesList").disabled = true;
-					voice.start();
-				});
-			document
-				.getElementById("stop")
-				.addEventListener("click", function (event) {
-					event.preventDefault();
-					document.getElementById("inputDevicesList").disabled = false;
-					voice.stop();
-				});
-			document
-				.getElementById("unload")
-				.addEventListener("click", function (event) {
-					event.preventDefault();
-					voice.unloadModel();
-					document.getElementById("lang").disabled = false;
-				});
-		</script>
+		<div class="notification-bottom">
+			<p id="statusPanel">
+				<span class="status" data-i18n="current.status"></span>
+				<span id="currentStatus" class="status-unselected" data-i18n="status.unselected"></span>
+			</p>
+			<!-- <span class="notification-close">X</span> -->
+		  </div>
 	</body>
 </html>

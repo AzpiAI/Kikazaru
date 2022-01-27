@@ -11,7 +11,6 @@ const voice = (function () {
 	const sampleRate = 48000;
 
 	function changeStatus(status) {
-		emitter.emit("modelStatusChange", { prev: modelStatus, current: status });
 		modelStatus = status;
 	}
 

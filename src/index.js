@@ -39,8 +39,8 @@ const createMainWindow = async () => {
 		title: app.name,
 		icon: path.join(__dirname, "static", "icon.ico"),
 		show: false,
-		width: 1920,
-		height: 1080,
+		width: 1000,
+		height: 600,
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
 			contextIsolation: true,
@@ -49,13 +49,17 @@ const createMainWindow = async () => {
 
 	win.webContents.once("dom-ready", () => {
 		ipcMain.on("getInputDevice", () => {
-			console.log("getInputDevice");
 			win.webContents.send("savedInputDevice", config.get("inputDevice"));
 		});
 
-		ipcMain.on("saveSelectedInputDevice", (evt, data) => {
+		ipcMain.on("saveSelectedInputDevice", (_, data) => {
 			config.set("inputDevice", data);
 		});
+
+		ipcMain.on("minimize", () => {
+			mainWindow.minimize();
+		});
+
 		server.start();
 	});
 
@@ -104,13 +108,18 @@ app.on("activate", () => {
 	}
 });
 
-ipcMain.on("partialResult", (event, result) => {
+ipcMain.on("partialResult", (_, result) => {
 	server.sendPartialResult(result);
 });
 
-ipcMain.on("result", (event, result) => {
+ipcMain.on("result", (_, result) => {
 	server.sendResult(result);
 });
+
+ipcMain.on("close", () => {
+	app.quit();
+});
+
 
 (async () => {
 	await app.whenReady();

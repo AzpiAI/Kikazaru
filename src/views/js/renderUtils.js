@@ -1,3 +1,5 @@
+// const i18n = require("../../i18n");
+
 async function loadConfiguration() {
 	window.i18n.changeLanguage(navigator.language);
 	navigator.mediaDevices.ondevicechange = (evt) => {
@@ -7,18 +9,10 @@ async function loadConfiguration() {
 }
 
 async function loadInputDevicesList() {
-	console.log("Loading input devices list");
 	let config = await getInputConfig();
-	console.log("Input config:", config);
 	let devices = await getInputDevices();
-	console.log("Input devices:", devices);
 	let data = [config, devices];
-	console.log("Input data:", data);
 	var devicesList = document.getElementById("inputDevicesList");
-	console.log(data);
-	console.log(data[0]);
-	console.log(data[1]);
-	console.log(devicesList);
 
 	// remove loading... option and setting the list able
 	devicesList.innerHTML = '';
@@ -69,3 +63,61 @@ function getSelectedInputDevice(){
 	let select = document.getElementById("inputDevicesList");
 	return select[select.selectedIndex].id;
 }
+
+function startRecognising(){
+	document.getElementById("inputDevicesList").disabled = true;
+	document.getElementById("languageChooser").disabled = true;
+	document.getElementById("start").disabled = true;
+	document.getElementById("stop").disabled = false;
+	voice.start();
+}
+
+function stopRecognising(){
+	document.getElementById("inputDevicesList").disabled = false;
+	document.getElementById("languageChooser").disabled = false;
+	document.getElementById("start").disabled = false;
+	document.getElementById("stop").disabled = true;
+	voice.stop();
+}
+
+
+
+async function loadLanguage(select){
+	//if is some language previously loaded, unload it
+	if(voice.modelStatus !== "unloaded")
+		voice.unloadModel();
+	
+	//load the selected model
+	var lang = select[select.selectedIndex].value;
+	loadingLanguage(true);
+	await voice.loadModel(
+		lang,
+		window.models[lang].url
+		);
+	loadingLanguage(false);
+}
+
+function loadingLanguage(isLoading){
+	let chooser = document.getElementById("languageChooser");
+	let loadingCircle = document.getElementById("loadingCircle");
+	let start = document.getElementById("start");
+	if(isLoading){
+		chooser.disabled = true;
+		start.disabled = true;
+		loadingCircle.style.display = "inline-block";
+		changeStatus("loading");
+		
+	}else{
+		chooser.disabled = false;
+		start.disabled = false;
+		loadingCircle.style.display = "none";
+		changeStatus("ready");
+	}
+}
+
+function changeStatus(status){
+	document.getElementById("currentStatus").remove();
+	document.getElementById("statusPanel").innerHTML +=`<span id="currentStatus" data-i18n="status.${status}" class="status-${status}"></span>`;
+	window.i18n.load();
+}
+

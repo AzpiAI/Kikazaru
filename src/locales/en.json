@@ -9,5 +9,13 @@
 	"start.recording": "Start recording",
 	"stop.recording": "Stop recording",
 	"open.tab": "Open tab",
-	"input.devices.loading": "Loading..."
+	"input.devices.loading": "Loading...",
+	"current.status": "Status:",
+	"choose.language": "Choose language...",
+	"sub.language": "Subtitle language:",
+	"status.unselected": "unselected",
+	"status.loading": "loading...",
+	"status.unloading": "unloading...",
+	"status.ready": "ready",
+	"status.running": "running"
 }

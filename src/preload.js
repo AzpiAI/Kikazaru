@@ -7,6 +7,8 @@ contextBridge.exposeInMainWorld("api", {
 			"inputDevicesAvailable",
 			"getInputDevice",
 			"saveSelectedInputDevice",
+			"close",
+			"minimize"
 		];
 		if (validChannels.includes(channel)) {
 			ipcRenderer.send(channel, data);

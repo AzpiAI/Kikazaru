@@ -4,12 +4,26 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>yuzu</title>
-		<link rel="stylesheet" href="../stylesheets/index.css" />
-		<script
-			type="application/javascript"
-			src="https://cdn.jsdelivr.net/npm/vosk-browser@0.0.5/dist/vosk.js"
-		></script>
+		<style>
+			html {
+				scroll-behavior: smooth;
+			}
+			#recognition-result {
+				font-family: sans-serif;
+				font-weight: normal;
+				font-size: 72px;
+				color: yellow;
+				background: rgba(0, 0, 0, 0.4);
+				padding: 10px;
+				border-radius: 50px;
+				height: 100px;
+				overflow-y: hidden;
+				opacity: 90;
+			}
+		</style>
 		<script type="application/javascript">
+			let cleanTimeout = null;
+			let insertBr = false;
 			function errorCallback(e) {
 				console.log("Error", e);
 			}
@@ -32,29 +46,66 @@
 				let action = wsMsg.type;
 				let result = wsMsg.data;
 
+				let pen =
+					resultsContainer.children.length > 1
+						? resultsContainer.children[resultsContainer.children.length - 2]
+						: null;
+
 				switch (action) {
 					case "result":
-						const newSpan = document.createElement("span");
-						newSpan.textContent = `${result.text} `;
-						resultsContainer.insertBefore(newSpan, partialContainer);
+						// set timeout if result.text is empty 5 or more seconds
+						if (result.text !== "") {
+							const newSpan = document.createElement("span");
+							// if pen is br tag captionize first character of result.text
+							let text = "";
+							if (pen && pen.tagName === "BR") {
+								text =
+									result.text[0].toUpperCase() + result.text.slice(1);
+							} else {
+								text = result.text;
+							}
+							text+=" ";
+							newSpan.innerHTML = text;
+							resultsContainer.insertBefore(newSpan, partialContainer);
+							partialContainer.textContent = "";
+							resultsContainer.scrollTop = resultsContainer.scrollHeight;
+						}
 						break;
 					case "partial":
-						partialContainer.textContent = result.partial;
+						if (
+							result.partial !== "" &&
+							partialContainer.textContent !== result.partial
+						) {
+							if (insertBr) {
+								const br = document.createElement("br");
+								resultsContainer.insertBefore(br, partialContainer);
+								insertBr = false;
+							}
+							partialContainer.textContent = result.partial;
+							cleanTimeout && clearTimeout(cleanTimeout);
+							cleanTimeout = null;
+						} else {
+							if (!cleanTimeout) {
+								 cleanTimeout = setTimeout(() => {
+									let pen =
+										resultsContainer.children.length > 1
+											? resultsContainer.children[
+													resultsContainer.children.length - 2
+											  ]
+											: null;
+									if (pen && pen.tagName !== "BR") {
+										insertBr = true;
+									}
+								}, 5000);
+							}
+						}
+						resultsContainer.scrollTop = resultsContainer.scrollHeight;
 						break;
 				}
 			};
 		</script>
 	</head>
 	<body>
-		<div class="container">
-			<header>
-				<h1>yuzu</h1>
-				<p></p>
-			</header>
-			<section class="main">
-				<div id="recognition-result">Parcial : <span id="partial"></span></div>
-			</section>
-			<footer></footer>
-		</div>
+		<div id="recognition-result"><span id="partial"></span></div>
 	</body>
 </html>

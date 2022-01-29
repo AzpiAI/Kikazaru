@@ -2,7 +2,7 @@ const path = require("node:path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const is = require("electron-util");
 const unhandled = require("electron-unhandled");
-const debug = require("electron-debug");
+//const debug = require("electron-debug");
 const config = require("./config.js");
 const server = require("./server.js");
 const process = require("process");
@@ -16,7 +16,7 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 app.commandLine.appendSwitch("js-flags", "--expose_gc");
 
 unhandled(); // Manage unhandled rejections (https://github.com/sindresorhus/electron-unhandled#readme)
-debug(); // Debug features
+//debug(); // Debug features
 
 // app.setAppUserModelId(packageJson.build.appId);
 
@@ -39,8 +39,9 @@ const createMainWindow = async () => {
 		title: app.name,
 		icon: path.join(__dirname, "static", "icon.ico"),
 		show: false,
-		width: 1000,
-		height: 600,
+		width: 725,
+		height: 520,
+		frame: false,
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
 			contextIsolation: true,
@@ -57,10 +58,15 @@ const createMainWindow = async () => {
 		});
 
 		ipcMain.on("minimize", () => {
-			mainWindow.minimize();
+			win.minimize();
 		});
 
 		server.start();
+
+		ipcMain.on("getServerHost", () => {
+			win.webContents.send("serverHost", `http://${server.host}:${server.port}`);
+		});
+
 	});
 
 	win.on("ready-to-show", () => {
@@ -120,6 +126,9 @@ ipcMain.on("close", () => {
 	app.quit();
 });
 
+// server.onHost((data)=>{
+// 	mainWindow.webContents.send("serverUrl", data);
+// });
 
 (async () => {
 	await app.whenReady();

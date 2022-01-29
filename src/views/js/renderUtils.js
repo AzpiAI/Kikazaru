@@ -6,6 +6,8 @@ async function loadConfiguration() {
 		loadInputDevicesList();
 	}
 	loadInputDevicesList();
+	loadServerHost();
+	
 }
 
 async function loadInputDevicesList() {
@@ -69,6 +71,7 @@ function startRecognising(){
 	document.getElementById("languageChooser").disabled = true;
 	document.getElementById("start").disabled = true;
 	document.getElementById("stop").disabled = false;
+	changeStatus("running");
 	voice.start();
 }
 
@@ -77,6 +80,7 @@ function stopRecognising(){
 	document.getElementById("languageChooser").disabled = false;
 	document.getElementById("start").disabled = false;
 	document.getElementById("stop").disabled = true;
+	changeStatus("ready");
 	voice.stop();
 }
 
@@ -121,3 +125,23 @@ function changeStatus(status){
 	window.i18n.load();
 }
 
+async function loadServerHost(){
+	let host = await getServerHost();
+	this.document.getElementById("txtServerHost").value = host;
+	this.document.getElementById("openServer").href = host;
+}
+async function getServerHost(){
+	return new Promise((resolve) => {
+		window.api.send("getServerHost", null);
+		window.api.receive("serverHost", (data) => {
+			resolve(data);
+		});
+	});
+}
+
+function copyToCLipboardElement(parent){
+	let elem = parent.children[0];
+	elem.select();
+	elem.setSelectionRange(0, 99999);
+	navigator.clipboard.writeText(elem.value);
+}

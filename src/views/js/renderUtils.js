@@ -122,7 +122,7 @@ function loadingLanguage(isLoading) {
 function changeStatus(status) {
     document.getElementById("currentStatus").remove();
     document.getElementById("statusPanel").innerHTML += `<span id="currentStatus" data-i18n="status.${status}" class="status-${status}"></span>`;
-    window.i18n.load();
+    window.i18n.localize("#statusPanel");
 }
 
 function loadServerHost(host) {

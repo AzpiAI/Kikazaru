@@ -23,7 +23,7 @@
                 <span class="minimize" onclick="window.api.send('minimize','null');"></span>
                 <span class="close" onclick="window.api.send('close','null');"></span>
             </div>
-            <h1>Azpi</h1>
+            <img id="logo" src="../static/logo_title.png">
         </header>
         <section id="section" class="main">
             <table class="controlsTable">
@@ -51,7 +51,7 @@
                 <tr>
                     <td data-i18n="open.tab"></td>
                     <td>
-                        <span style="position:relative;" onclick="copyToCLipboardElement(this)" data-tip="copy">
+                        <span style="position:relative;" onclick="copyToCLipboardElement(this)" data-i18n="[data-tip]copy">
 								<input type="text" title="copy" id="txtServerHost" readonly="readonly" disabled onclick="copyToCLipboardElement(this)"  data-i18n="status.loading">
 							</span>
                         <i class="fas fa-external-link-alt" id="openServer" href="http://localhost:9900"></i>

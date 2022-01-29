@@ -208,3 +208,7 @@ header h1 {
 [data-tip]:hover:after {
     display: block;
 }
+
+#logo {
+    margin-top: -60px;
+}

@@ -37,11 +37,12 @@ let mainWindow;
 const createMainWindow = async() => {
     const win = new BrowserWindow({
         title: app.name,
-        icon: path.join(__dirname, "static", "icon.ico"),
+        icon: path.join(__dirname, "static", "logo.png"),
         show: false,
         width: 725,
         height: 520,
         frame: false,
+        resizable: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: true,

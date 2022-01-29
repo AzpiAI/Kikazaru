@@ -18,10 +18,13 @@
 	"current.status": "Estado:",
 	"choose.language": "Seleccione idioma...",
 	"sub.language": "Idioma de subs.:",
-	"status.unselected": "Sin seleccionar",
+	"status.unloaded": "Sin seleccionar",
 	"status.loading": "cargando...",
 	"status.unloading": "liberando...",
-	"status.ready": "Listo",
+	"status.loaded": "Listo",
+	"status.loading_error": "Error cargando idioma",
+	"status.stopping_error": "Error finalizando",
+	"status.stopping": "finalizando...",
 	"status.running": "En ejecución",
 	"input.device": "Dispositivo de entrada:"
 }

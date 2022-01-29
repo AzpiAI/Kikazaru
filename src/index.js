@@ -2,7 +2,7 @@ const path = require("node:path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const is = require("electron-util");
 const unhandled = require("electron-unhandled");
-//const debug = require("electron-debug");
+// const debug = require("electron-debug");
 const config = require("./config.js");
 const server = require("./server.js");
 const process = require("process");
@@ -16,7 +16,7 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 app.commandLine.appendSwitch("js-flags", "--expose_gc");
 
 unhandled(); // Manage unhandled rejections (https://github.com/sindresorhus/electron-unhandled#readme)
-//debug(); // Debug features
+// debug(); // Debug features
 
 // app.setAppUserModelId(packageJson.build.appId);
 
@@ -34,103 +34,103 @@ unhandled(); // Manage unhandled rejections (https://github.com/sindresorhus/ele
 // Prevent window = require( being garbage collected
 let mainWindow;
 
-const createMainWindow = async () => {
-	const win = new BrowserWindow({
-		title: app.name,
-		icon: path.join(__dirname, "static", "icon.ico"),
-		show: false,
-		width: 725,
-		height: 520,
-		frame: false,
-		webPreferences: {
-			preload: path.join(__dirname, "preload.js"),
-			contextIsolation: true,
-		},
-	});
+const createMainWindow = async() => {
+    const win = new BrowserWindow({
+        title: app.name,
+        icon: path.join(__dirname, "static", "icon.ico"),
+        show: false,
+        width: 725,
+        height: 520,
+        frame: false,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
+        },
+    });
 
-	win.webContents.once("dom-ready", () => {
-		ipcMain.on("getInputDevice", () => {
-			win.webContents.send("savedInputDevice", config.get("inputDevice"));
-		});
+    win.webContents.once("dom-ready", () => {
+        ipcMain.on("getInputDevice", () => {
+            win.webContents.send("savedInputDevice", config.get("inputDevice"));
+        });
 
-		ipcMain.on("saveSelectedInputDevice", (_, data) => {
-			config.set("inputDevice", data);
-		});
+        ipcMain.on("saveSelectedInputDevice", (_, data) => {
+            config.set("inputDevice", data);
+        });
 
-		ipcMain.on("minimize", () => {
-			win.minimize();
-		});
+        ipcMain.on("minimize", () => {
+            win.minimize();
+        });
 
-		server.start();
+        server.start();
 
-		ipcMain.on("getServerHost", () => {
-			win.webContents.send("serverHost", `http://${server.host}:${server.port}`);
-		});
+        server.onHost((data) => {
+            win.webContents.send("serverStart", data);
+        });
 
-	});
+    });
 
-	win.on("ready-to-show", () => {
-		win.show();
-	});
+    win.on("ready-to-show", () => {
+        win.show();
+    });
 
-	win.on("closed", () => {
-		// Dereference the window
-		// For multiple windows store them in an array
-		mainWindow = undefined;
-	});
-	await win.loadFile(path.join(__dirname, "views", "index.html"));
+    win.on("closed", () => {
+        // Dereference the window
+        // For multiple windows store them in an array
+        mainWindow = undefined;
+    });
+    await win.loadFile(path.join(__dirname, "views", "index.html"));
 
-	return win;
+    return win;
 };
 
 // Prevent multiple instances of the app
 if (!app.requestSingleInstanceLock()) {
-	app.quit();
+    app.quit();
 }
 
 app.on("before-quit", () => {
-	server.stop();
+    server.stop();
 });
 
 app.on("second-instance", () => {
-	if (mainWindow) {
-		if (mainWindow.isMinimized()) {
-			mainWindow.restore();
-		}
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) {
+            mainWindow.restore();
+        }
 
-		mainWindow.show();
-	}
+        mainWindow.show();
+    }
 });
 
 app.on("window-all-closed", () => {
-	if (!is.macos) {
-		app.quit();
-	}
+    if (!is.macos) {
+        app.quit();
+    }
 });
 
 app.on("activate", () => {
-	if (!mainWindow) {
-		mainWindow = createMainWindow();
-	}
+    if (!mainWindow) {
+        mainWindow = createMainWindow();
+    }
 });
 
 ipcMain.on("partialResult", (_, result) => {
-	server.sendPartialResult(result);
+    server.sendPartialResult(result);
 });
 
 ipcMain.on("result", (_, result) => {
-	server.sendResult(result);
+    server.sendResult(result);
 });
 
 ipcMain.on("close", () => {
-	app.quit();
+    app.quit();
 });
 
 // server.onHost((data)=>{
 // 	mainWindow.webContents.send("serverUrl", data);
 // });
 
-(async () => {
-	await app.whenReady();
-	mainWindow = await createMainWindow();
+(async() => {
+    await app.whenReady();
+    mainWindow = await createMainWindow();
 })();

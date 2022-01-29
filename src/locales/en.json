@@ -18,10 +18,13 @@
 	"current.status": "Status:",
 	"choose.language": "Choose language...",
 	"sub.language": "Subtitle language:",
-	"status.unselected": "unselected",
+	"status.unloaded": "unselected",
 	"status.loading": "loading...",
 	"status.unloading": "unloading...",
-	"status.ready": "ready",
+	"status.loaded": "ready",
+	"status.loading_error": "Error loading lang.",
+	"status.stopping_error": "Error stoping",
+	"status.stopping": "stopping...",
 	"status.running": "running",
 	"input.device": "Input device:"
 }

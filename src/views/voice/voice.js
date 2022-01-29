@@ -12,6 +12,7 @@ const voice = (function () {
 
 	function changeStatus(status) {
 		modelStatus = status;
+		emitter.emit("modelStatusChange", status);
 	}
 
 	async function initModel() {

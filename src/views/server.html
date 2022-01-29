@@ -15,15 +15,6 @@
 			}
 
 			let webSocket = new WebSocket("ws://localhost:9900");
-			webSocket.onopen = function (openEvent) {
-				console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
-			};
-			webSocket.onclose = function (closeEvent) {
-				console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
-			};
-			webSocket.onerror = function (errorEvent) {
-				console.log("WebSocket ERROR: " + JSON.stringify(errorEvent, null, 4));
-			};
 			webSocket.onmessage = function (messageEvent) {
 				let resultsContainer = document.getElementById("recognition-result");
 				let partialContainer = document.getElementById("partial");

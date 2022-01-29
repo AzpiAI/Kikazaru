@@ -24,7 +24,7 @@
 				<div class="wrapper">
 					<span class="minimize" onclick="window.api.send('minimize','null');"></span>
 					<span class="close" onclick="window.api.send('close','null');"></span>
-				  </div>
+				</div>
 				<h1>Azpi</h1>
 			</header>
 			<section  id="section" class="main">
@@ -40,7 +40,7 @@
 					<tr>
 						<td>
 							<label data-i18n="sub.language"></label>
-						</td>	
+						</td>
 						<td>
 							<select id="languageChooser" onchange="loadLanguage(this)">
 								<option value="" selected disabled hidden data-i18n="choose.language"></option>
@@ -60,11 +60,11 @@
 						</td>
 					</tr>
 				</table>
-					
+
 					<button class="btn btn-primary" id="start" onclick="startRecognising()" data-i18n="start.recording" disabled></button> <br />
 					<button class="btn btn-primary" id="stop" onclick="stopRecognising()" href="#" data-i18n="stop.recording" disabled></button> <br />
 					<br />
-				
+
 			</section>
 			<footer></footer>
 		</div>
@@ -73,8 +73,7 @@
 				<span class="status" data-i18n="current.status"></span>
 				<span id="currentStatus" class="status-unselected" data-i18n="status.unselected"></span>
 			</p>
-			<!-- <span class="notification-close">X</span> -->
-		  </div>
+		</div>
 
 
 	</body>

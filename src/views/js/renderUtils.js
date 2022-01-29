@@ -7,7 +7,6 @@ async function loadConfiguration() {
 	}
 	loadInputDevicesList();
 	loadServerHost();
-	
 }
 
 async function loadInputDevicesList() {
@@ -90,7 +89,7 @@ async function loadLanguage(select){
 	//if is some language previously loaded, unload it
 	if(voice.modelStatus !== "unloaded")
 		voice.unloadModel();
-	
+
 	//load the selected model
 	var lang = select[select.selectedIndex].value;
 	loadingLanguage(true);
@@ -110,7 +109,7 @@ function loadingLanguage(isLoading){
 		start.disabled = true;
 		loadingCircle.style.display = "inline-block";
 		changeStatus("loading");
-		
+
 	}else{
 		chooser.disabled = false;
 		start.disabled = false;

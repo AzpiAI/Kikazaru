@@ -7,13 +7,16 @@ contextBridge.exposeInMainWorld("api", {
 			"inputDevicesAvailable",
 			"getInputDevice",
 			"saveSelectedInputDevice",
+			"close",
+			"minimize",
+			"getServerHost"
 		];
 		if (validChannels.includes(channel)) {
 			ipcRenderer.send(channel, data);
 		}
 	},
 	receive: (channel, func) => {
-		let validChannels = ["savedInputDevice"];
+		let validChannels = ["savedInputDevice", "serverHost"];
 		if (validChannels.includes(channel)) {
 			ipcRenderer.on(channel, (event, ...args) => func(...args));
 		}

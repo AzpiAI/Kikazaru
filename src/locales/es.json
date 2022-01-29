@@ -13,6 +13,15 @@
 	"unload.model": "Desactivar modelo",
 	"start.recording": "Empezar",
 	"stop.recording": "Terminar",
-	"open.tab": "Abrir pestaña",
-	"input.devices.loading": "Cargando..."
+	"open.tab": "Enlace:",
+	"input.devices.loading": "Cargando...",
+	"current.status": "Estado:",
+	"choose.language": "Seleccione idioma...",
+	"sub.language": "Idioma de subs.:",
+	"status.unselected": "Sin seleccionar",
+	"status.loading": "cargando...",
+	"status.unloading": "liberando...",
+	"status.ready": "Listo",
+	"status.running": "En ejecución",
+	"input.device": "Dispositivo de entrada:"
 }

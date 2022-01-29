@@ -3,16 +3,7 @@ const file = new static.Server(`${__dirname}/views/server.html`);
 const { WebSocket } = require("ws");
 const { EventEmitter } = require("events");
 
-module.exports = {
-	start: start,
-	stop: stop,
-	sendConfig: sendConfig,
-	sendPartialResult: sendPartialResult,
-	sendResult: sendResult,
 
-	onStatusChange: onStatusChange,
-	onHost: onHost,
-};
 
 const emitter = new EventEmitter();
 
@@ -101,3 +92,16 @@ function sendPartialResult(partialResult) {
 function sendResult(result) {
 	sendMessage(JSON.stringify({ type: "result", data: result }));
 }
+
+module.exports = {
+	start: start,
+	stop: stop,
+	sendConfig: sendConfig,
+	sendPartialResult: sendPartialResult,
+	sendResult: sendResult,
+
+	onStatusChange: onStatusChange,
+	onHost: onHost,
+	host: host,
+	port: port
+};

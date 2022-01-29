@@ -105,7 +105,7 @@ const voice = (function () {
 					noiseSuppression: true,
 					channelCount: 1,
 					sampleRate,
-					deviceId: deviceId
+					deviceId: deviceId,
 				},
 			});
 

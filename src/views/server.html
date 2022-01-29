@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>yuzu</title>
 		<style>
 			html {
 				scroll-behavior: smooth;
@@ -28,16 +27,7 @@
 				console.log("Error", e);
 			}
 
-			let webSocket = new WebSocket("ws://localhost:9900");
-			webSocket.onopen = function (openEvent) {
-				console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
-			};
-			webSocket.onclose = function (closeEvent) {
-				console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
-			};
-			webSocket.onerror = function (errorEvent) {
-				console.log("WebSocket ERROR: " + JSON.stringify(errorEvent, null, 4));
-			};
+			let webSocket = new WebSocket(`ws://${window.location.host}`);
 			webSocket.onmessage = function (messageEvent) {
 				let resultsContainer = document.getElementById("recognition-result");
 				let partialContainer = document.getElementById("partial");
@@ -59,12 +49,11 @@
 							// if pen is br tag captionize first character of result.text
 							let text = "";
 							if (pen && pen.tagName === "BR") {
-								text =
-									result.text[0].toUpperCase() + result.text.slice(1);
+								text = result.text[0].toUpperCase() + result.text.slice(1);
 							} else {
 								text = result.text;
 							}
-							text+=" ";
+							text += " ";
 							newSpan.innerHTML = text;
 							resultsContainer.insertBefore(newSpan, partialContainer);
 							partialContainer.textContent = "";
@@ -86,7 +75,7 @@
 							cleanTimeout = null;
 						} else {
 							if (!cleanTimeout) {
-								 cleanTimeout = setTimeout(() => {
+								cleanTimeout = setTimeout(() => {
 									let pen =
 										resultsContainer.children.length > 1
 											? resultsContainer.children[

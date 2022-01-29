@@ -1,17 +1,17 @@
 {
-	"name": "yuzu",
-	"version": "1.0.0",
+	"name": "azpi",
+	"version": "0.0.1",
 	"description": "",
 	"main": "src/index.js",
 	"license": "MIT",
-	"homepage": "https://github.com/kaecius/Yuzu#readme",
+	"homepage": "https://github.com/kaecius/azpi#readme",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/kaecius/Yuzu.git"
+		"url": "git+https://github.com/kaecius/Azpi.git"
 	},
 	"author": "Erlantz Calvo and Daniel Cañadillas",
 	"bugs": {
-		"url": "https://github.com/kaecius/Yuzu/issues"
+		"url": "https://github.com/kaecius/Azpi/issues"
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
@@ -47,7 +47,7 @@
 		"releaseDraft": false
 	},
 	"build": {
-		"appId": "com.yuzu",
+		"appId": "com.azpi",
 		"mac": {
 			"category": "public.app-category.social-networking",
 			"darkModeSupport": false

@@ -1,79 +1,140 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Azpi</title>
+		<link rel="stylesheet" href="../stylesheets/index.css" />
+		<link href="../stylesheets/btstrp.css" rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+			integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<script src="../../node_modules/vosk-browser/dist/vosk.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"
+			integrity="sha512-AbgDRHOu/IQcXzZZ6WrOliwI8umwOgLE7sZgRAsNzmcOWlQA8RhXQzBx99Ho0jlGPWIPoT9pwk4kmeeR4qsV/g=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script src="./js/renderUtils.js"></script>
+		<script defer src="./js/recognizerUtils.js"></script>
+		<script src="voice/voice.js"></script>
+	</head>
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Azpi</title>
-    <link rel="stylesheet" href="../stylesheets/index.css" />
-    <link href="../stylesheets/btstrp.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
-    <script src="../../node_modules/vosk-browser/dist/vosk.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js" integrity="sha512-AbgDRHOu/IQcXzZZ6WrOliwI8umwOgLE7sZgRAsNzmcOWlQA8RhXQzBx99Ho0jlGPWIPoT9pwk4kmeeR4qsV/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="./js/renderUtils.js"></script>
-    <script defer src="./js/recognizerUtils.js"></script>
-    <script src="voice/voice.js"></script>
-</head>
-
-<body onload="loadConfiguration()">
-    <div class="container">
-        <header>
-            <div class="wrapper">
-                <span class="minimize" onclick="window.api.send('minimize','null');"></span>
-                <span class="close" onclick="window.api.send('close','null');"></span>
-            </div>
-            <img id="logo" src="../static/logo_title.png">
-        </header>
-        <section id="section" class="main">
-            <table class="controlsTable">
-                <tr>
-                    <td data-i18n="input.device"></td>
-                    <td>
-                        <select id="inputDevicesList" disabled onchange="saveInputDeviceConfig(this)">
-							<option value="loading" data-i18n="input.devices.loading"></option>
-						</select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label data-i18n="sub.language"></label>
-                    </td>
-                    <td>
-                        <select id="languageChooser" onchange="loadLanguage(this)">
-								<option value="" selected disabled hidden data-i18n="choose.language"></option>
+	<body onload="loadConfiguration()">
+		<div class="container">
+			<header>
+				<div class="wrapper">
+					<span
+						class="minimize"
+						onclick="window.api.send('minimize','null');"
+					></span>
+					<span class="close" onclick="window.api.send('close','null');"></span>
+				</div>
+				<img id="logo" src="../static/logo_title.png" />
+			</header>
+			<section id="section" class="main">
+				<table class="controlsTable">
+					<tr>
+						<td data-i18n="input.device"></td>
+						<td>
+							<select
+								id="inputDevicesList"
+								disabled
+								onchange="saveInputDeviceConfig(this)"
+							>
+								<option
+									value="loading"
+									data-i18n="input.devices.loading"
+								></option>
 							</select>
-                        <div id="loadingCircle" class="spinner-border text-primary" style="display: none;" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-i18n="open.tab"></td>
-                    <td>
-                        <span style="position:relative;" onclick="copyToCLipboardElement(this)" data-i18n="[data-tip]copy">
-								<input type="text" title="copy" id="txtServerHost" readonly="readonly" disabled onclick="copyToCLipboardElement(this)"  data-i18n="status.loading">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label data-i18n="sub.language"></label>
+						</td>
+						<td>
+							<select id="languageChooser" onchange="loadLanguage(this)">
+								<option
+									value=""
+									selected
+									disabled
+									hidden
+									data-i18n="choose.language"
+								></option>
+							</select>
+							<div
+								id="loadingCircle"
+								class="spinner-border text-primary"
+								style="display: none"
+								role="status"
+							>
+								<span class="sr-only">Loading...</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td data-i18n="open.tab"></td>
+						<td>
+							<span
+								style="position: relative"
+								onclick="copyToCLipboardElement(this)"
+								data-i18n="[data-tip]copy"
+							>
+								<input
+									type="text"
+									title="copy"
+									id="txtServerHost"
+									readonly="readonly"
+									disabled
+									onclick="copyToCLipboardElement(this)"
+									data-i18n="status.loading"
+								/>
 							</span>
-                        <i class="fas fa-external-link-alt" id="openServer" href="http://localhost:9900"></i>
-                    </td>
-                </tr>
-            </table>
+							<i
+								class="fas fa-external-link-alt"
+								id="openServer"
+								href="http://localhost:9900"
+							></i>
+						</td>
+					</tr>
+				</table>
 
-            <button class="btn btn-primary" id="start" onclick="startRecognising()" data-i18n="start.recording" disabled></button> <br />
-            <button class="btn btn-primary" id="stop" onclick="stopRecognising()" href="#" data-i18n="stop.recording" disabled></button> <br />
-            <br />
-
-        </section>
-        <footer></footer>
-    </div>
-    <div class="notification-bottom">
-        <p id="statusPanel">
-            <span class="status" data-i18n="current.status"></span>
-            <span id="currentStatus" class="status-unloaded" data-i18n="status.unloaded"></span>
-        </p>
-    </div>
-
-
-</body>
-
+				<button
+					class="btn btn-primary"
+					id="start"
+					onclick="startRecognising()"
+					data-i18n="start.recording"
+					disabled
+				></button>
+				<br />
+				<button
+					class="btn btn-primary"
+					id="stop"
+					onclick="stopRecognising()"
+					href="#"
+					data-i18n="stop.recording"
+					disabled
+				></button>
+				<br />
+				<br />
+			</section>
+			<footer></footer>
+		</div>
+		<div class="notification-bottom">
+			<p id="statusPanel">
+				<span class="status" data-i18n="current.status"></span>
+				<span
+					id="currentStatus"
+					class="status-unloaded"
+					data-i18n="status.unloaded"
+				></span>
+			</p>
+		</div>
+	</body>
 </html>

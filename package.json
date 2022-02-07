@@ -20,7 +20,7 @@
         "start": "eslint src --fix && electron .",
         "pack": "eslint src --fix && electron-builder --dir",
         "dist_windows": "eslint src --fix && electron-builder --windows",
-        "build": "electron-builder build --win --publish=always",
+        "build": "electron-builder build --publish=always",
         "release": "electron-builder"
     },
     "dependencies": {

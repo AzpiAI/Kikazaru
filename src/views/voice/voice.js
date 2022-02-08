@@ -89,11 +89,14 @@ const voice = (function () {
 	}
 
 	async function start() {
-		if (modelStatus != "loaded") {
+		if (modelStatus == "unloaded" 
+			|| modelStatus == "loading" 
+			|| modelStatus == "running"
+			|| modelStatus == "stopping_error") {
 			console.error("Model is not loaded, current status: " + modelStatus);
-			return;
+			return false;
 		}
-
+		var result = false;
 		try {
 			let channel = new MessageChannel();
 			let deviceId = getSelectedInputDevice();
@@ -127,24 +130,30 @@ const voice = (function () {
 			audioSource = audioContext.createMediaStreamSource(mediaStream);
 			audioSource.connect(recognizerProcessor);
 			changeStatus("running");
+			result = true;
 		} catch (e) {
 			changeStatus("running_error");
 			console.error(e);
+		}finally{
+			return result;
 		}
 	}
 
 	function stop() {
 		if (modelStatus != "running") {
 			console.error("Model is not running, current status: " + modelStatus);
-			return;
+			return false;
 		}
-
+		var result = false;
 		try {
 			audioSource.disconnect();
 			changeStatus("loaded");
+			result = true;
 		} catch (e) {
 			changeStatus("stopping_error");
 			console.error(e);
+		} finally {
+			return result;
 		}
 	}
 

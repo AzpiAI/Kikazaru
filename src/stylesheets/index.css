@@ -86,6 +86,7 @@ header h1 {
 }
 
 .status-error_loading,
+.status-running_error,
 .status-error_stopping {
 	color: #f70000;
 }

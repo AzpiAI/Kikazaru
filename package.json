@@ -1,5 +1,5 @@
 {
-    "name": "azpi",
+    "name": "kikazaru",
     "version": "0.0.1",
     "description": "AI based speech to subtitle",
     "main": "src/index.js",

@@ -1,7 +1,7 @@
 {
     "name": "azpi",
     "version": "0.0.1",
-    "description": "",
+    "description": "AI based speech to subtitle",
     "main": "src/index.js",
     "license": "MIT",
     "homepage": "https://github.com/AzpiAI/Kikazaru#readme",

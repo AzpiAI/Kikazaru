@@ -27,5 +27,6 @@
 	"status.stopping": "finalizando...",
 	"status.running": "En ejecución",
 	"input.device": "Dispositivo de entrada:",
-	"copy": "copiar"
+	"copy": "copiar",
+	"status.running_error":"Error empezando"
 }

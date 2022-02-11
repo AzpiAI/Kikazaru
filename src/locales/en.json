@@ -27,5 +27,6 @@
 	"status.stopping": "stopping...",
 	"status.running": "running",
 	"input.device": "Input device:",
-	"copy": "copy"
+	"copy": "copy",
+	"status.running_error":"Error running"
 }

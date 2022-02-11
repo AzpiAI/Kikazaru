@@ -71,19 +71,26 @@ function getSelectedInputDevice() {
 }
 
 function startRecognising() {
-	document.getElementById("inputDevicesList").disabled = true;
-	document.getElementById("languageChooser").disabled = true;
-	document.getElementById("start").disabled = true;
-	document.getElementById("stop").disabled = false;
-	voice.start();
+	voice.start().then((correct)=>{
+		if(!correct)return false;
+		
+		document.getElementById("inputDevicesList").disabled = true;
+		document.getElementById("languageChooser").disabled = true;
+		document.getElementById("start").disabled = true;
+		document.getElementById("stop").disabled = false;
+
+	});
 }
 
 function stopRecognising() {
-	document.getElementById("inputDevicesList").disabled = false;
-	document.getElementById("languageChooser").disabled = false;
-	document.getElementById("start").disabled = false;
-	document.getElementById("stop").disabled = true;
-	voice.stop();
+	voice.stop().then((correct)=>{
+		if(!correct)return false;
+
+		document.getElementById("inputDevicesList").disabled = false;
+		document.getElementById("languageChooser").disabled = false;
+		document.getElementById("start").disabled = false;
+		document.getElementById("stop").disabled = true;
+	});
 }
 
 async function loadLanguage(select) {

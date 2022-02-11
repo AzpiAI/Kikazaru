@@ -1,15 +1,44 @@
-name: Build/release
+name: Build electron release for Windows/Linux/Mac
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
 jobs:
+  tag-creation: #commit must have '#major , #minor or #patch'
+    name: Generate tag
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version_tag.outputs.new_tag }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+        with:
+          fetch-depth: '0'
+
+      - name: Generate next version tag
+        id: version_tag
+        uses: ChloePlanet/github-tag-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          RELEASE_BRANCHES: main
+
+      - name: exit if not created
+        if: ${{ steps.version_tag.outputs.tag_generated == 0 }} 
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Tag was not generated')
+            
   release:
+    needs: [tag-creation]
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -21,7 +50,7 @@ jobs:
           node-version: 16.13.1
 
       - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+        uses: samuelmeuli/action-electron-builder@master
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
@@ -29,4 +58,4 @@ jobs:
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          release: true

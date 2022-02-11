@@ -20,7 +20,7 @@
         "start": "eslint src --fix && electron .",
         "pack": "eslint src --fix && electron-builder --dir",
         "dist_windows": "eslint src --fix && electron-builder --windows",
-        "build": "electron-builder build --publish=always"
+        "build": "electron-builder build"
     },
     "dependencies": {
         "electron-context-menu": "^3.1.1",
@@ -47,7 +47,7 @@
         "releaseDraft": false
     },
     "build": {
-        "appId": "com.azpi",
+        "appId": "com.kikazaru",
         "mac": {
             "category": "public.app-category.social-networking",
             "darkModeSupport": false

@@ -19,7 +19,7 @@ jobs:
 
       - name: Generate next version tag
         id: version_tag
-        uses: ChloePlanet/github-tag-action@master
+        uses: ChloePlanet/github-tag-action@2.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true

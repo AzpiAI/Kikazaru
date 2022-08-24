@@ -3,7 +3,7 @@ name: Build electron release for Windows/Linux/Mac
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - '*'
 
 jobs:       
   release:

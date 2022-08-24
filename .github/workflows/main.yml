@@ -2,38 +2,11 @@ name: Build electron release for Windows/Linux/Mac
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
 
-jobs:
-  tag-creation: #commit must have '#major , #minor or #patch'
-    name: Generate tag
-    runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.version_tag.outputs.new_tag }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@master
-        with:
-          fetch-depth: '0'
-
-      - name: Generate next version tag
-        id: version_tag
-        uses: ChloePlanet/github-tag-action@2.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          RELEASE_BRANCHES: main
-
-      - name: exit if not created
-        if: ${{ steps.version_tag.outputs.tag_generated == 0 }} 
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.setFailed('Tag was not generated')
-            
+jobs:       
   release:
-    needs: [tag-creation]
     runs-on: ${{ matrix.os }}
 
     strategy:

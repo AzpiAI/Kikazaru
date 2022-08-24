@@ -139,7 +139,7 @@ const voice = (function () {
 		}
 	}
 
-	function stop() {
+	async function stop() {
 		if (modelStatus != "running") {
 			console.error("Model is not running, current status: " + modelStatus);
 			return false;

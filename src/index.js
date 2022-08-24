@@ -9,25 +9,15 @@ const process = require("process");
 
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 
-// const packageJson = require("../package.json");
-// const {autoUpdater} = require( 'electron-updater');
-
 app.commandLine.appendSwitch("js-flags", "--expose_gc");
 
 unhandled(); // Manage unhandled rejections (https://github.com/sindresorhus/electron-unhandled#readme)
 // debug(); // Debug features
-
-// app.setAppUserModelId(packageJson.build.appId);
-// Uncomment this before publishing your first version.
-// It's commented out as it throws an error if there are no published versions.
-// if (!is.development) {
-// 	const FOUR_HOURS = 1000 * 60 * 60 * 4;
-// 	setInterval(() => {
-// 		autoUpdater.checkForUpdates();
-// 	}, FOUR_HOURS);
-//
-// 	autoUpdater.checkForUpdates();
-// }
+try {
+	require('electron-reloader')(module);
+} catch {
+	// only for dev
+}
 
 let mainWindow;
 
@@ -36,8 +26,8 @@ const createMainWindow = async () => {
 		title: app.name,
 		icon: path.join(__dirname, "static", "logo.png"),
 		show: false,
-		width: 725,
-		height: 520,
+		width: 525,
+		height: 450,
 		frame: false,
 		resizable: false,
 		webPreferences: {

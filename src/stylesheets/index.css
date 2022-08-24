@@ -17,20 +17,11 @@ body {
 }
 
 header {
+	width: 100%;
 	height: 160px;
-	top: 50%;
-	left: 50%;
-	/* margin-top: -125px;
-	margin-left: -250px; */
-	text-align: center;
-}
-
-header h1 {
-	font-size: 70px;
-	font-weight: 200;
-	margin: 0;
-	padding: 0;
-	opacity: 0.7;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
 
 .container {
@@ -49,25 +40,14 @@ header h1 {
 	position: fixed;
 	width: 100%;
 	bottom: -13px;
-	left: 5px;
-	/* Rest of your styling */
+	border-top-style: solid;
+	border-top-width: 2px;
+	border-top-color: black;
 }
 
 .status {
 	margin-right: 5px;
 }
-
-
-/* .notification-close {
-	position: absolute;
-	right: 5px;
-	top: 5px;
-  } */
-
-
-/* .spinner-border {
-	  display: none !important;
-  } */
 
 .status-running {
 	color: #08a01c;
@@ -92,13 +72,16 @@ header h1 {
 }
 
 .wrapper {
-	position: relative;
-	display: inline-block;
+	margin-top: 15px;
 	width: 100%;
-	height: 30%;
+	height: 50px;
 	z-index: 10;
 	-webkit-user-select: none;
 	-webkit-app-region: drag;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+
 }
 
 .close:before {
@@ -109,11 +92,9 @@ header h1 {
 	color: #b83030;
 }
 
+
 .close {
 	font-size: 30px;
-	position: absolute;
-	top: -0.1em;
-	right: 1%;
 	cursor: pointer;
 	-webkit-app-region: no-drag;
 }
@@ -127,12 +108,13 @@ header h1 {
 }
 
 .minimize {
-	font-size: 40px;
-	position: absolute;
-	top: -0.5em;
-	right: 6%;
+	font-size: 30px;
 	cursor: pointer;
 	-webkit-app-region: no-drag;
+}
+
+.minimize, .close{
+	margin: 0 5px 0 5px;
 }
 
 #txtServerHost {
@@ -144,18 +126,17 @@ header h1 {
 }
 
 .controlsTable {
-	margin: 2em 5em 1em 5em;
+	margin: auto;
+	width: 90%;
 	text-align: left;
 }
 
 .controlsTable tr td:first-child {
 	width: 33%;
-	/* padding-left: 5em; */
 }
 
 .controlsTable tr td {
 	padding-bottom: 2%;
-	/* padding-left: 5em; */
 }
 
 .fa-external-link-alt:hover {
@@ -169,7 +150,6 @@ header h1 {
 
 [data-tip]:before {
 	content: '';
-	/* hides the tooltip when not hovered */
 	display: none;
 	content: '';
 	border-left: 5px solid transparent;
@@ -211,5 +191,13 @@ header h1 {
 }
 
 #logo {
-	margin-top: -60px;
+	margin-top: -50px;
+	pointer-events: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+	align-self: center;
 }

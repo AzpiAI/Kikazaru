@@ -73,7 +73,7 @@ function getSelectedInputDevice() {
 function startRecognising() {
 	voice.start().then((correct)=>{
 		if(!correct)return false;
-		
+
 		document.getElementById("inputDevicesList").disabled = true;
 		document.getElementById("languageChooser").disabled = true;
 		document.getElementById("start").disabled = true;

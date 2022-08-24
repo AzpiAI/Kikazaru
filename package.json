@@ -39,6 +39,7 @@
     "devDependencies": {
         "electron": "^16.0.5",
         "electron-builder": "^22.14.5",
+        "electron-reloader": "^1.2.3",
         "eslint": "^8.4.1",
         "np": "^7.6.0"
     },
@@ -54,7 +55,8 @@
         },
         "dmg": {
             "iconSize": 160,
-            "contents": [{
+            "contents": [
+                {
                     "x": 180,
                     "y": 170
                 },

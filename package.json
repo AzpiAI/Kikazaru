@@ -1,0 +1,78 @@
+{
+    "name": "kikazaru",
+    "version": "0.0.1",
+    "description": "AI based speech to subtitle",
+    "main": "src/index.js",
+    "license": "MIT",
+    "homepage": "https://github.com/AzpiAI/Kikazaru#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AzpiAI/Kikazaru.git"
+    },
+    "author": "Erlantz Calvo and Daniel Cañadillas",
+    "bugs": {
+        "url": "https://github.com/AzpiAI/Kikazaru/issues"
+    },
+    "scripts": {
+        "postinstall": "electron-builder install-app-deps",
+        "lint": "eslint src --fix",
+        "test": "npm run lint",
+        "start": "eslint src --fix && electron .",
+        "pack": "eslint src --fix && electron-builder --dir",
+        "dist_windows": "eslint src --fix && electron-builder --windows",
+        "release": "electron-builder --publish=always"
+    },
+    "dependencies": {
+        "electron-context-menu": "^3.1.1",
+        "electron-debug": "^3.2.0",
+        "electron-store": "^8.0.1",
+        "electron-unhandled": "^3.0.2",
+        "electron-updater": "^4.6.1",
+        "electron-util": "^0.17.2",
+        "events": "^3.3.0",
+        "i18next": "^21.6.7",
+        "loc-i18next": "^0.1.4",
+        "node-static": "^0.7.11",
+        "vosk-browser": "^0.0.5",
+        "ws": "^8.4.2"
+    },
+    "devDependencies": {
+        "electron": "^16.0.5",
+        "electron-builder": "^22.14.5",
+        "electron-reloader": "^1.2.3",
+        "eslint": "^8.4.1",
+        "np": "^7.6.0"
+    },
+    "np": {
+        "publish": false,
+        "releaseDraft": false
+    },
+    "build": {
+        "appId": "com.kikazaru",
+        "mac": {
+            "category": "public.app-category.social-networking",
+            "darkModeSupport": false
+        },
+        "dmg": {
+            "iconSize": 160,
+            "contents": [
+                {
+                    "x": 180,
+                    "y": 170
+                },
+                {
+                    "x": 480,
+                    "y": 170,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ]
+        },
+        "linux": {
+            "target": [
+                "AppImage"
+            ],
+            "category": "Network;Chat"
+        }
+    }
+}
